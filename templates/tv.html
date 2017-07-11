@@ -1,0 +1,90 @@
+{% extends "header.html" %}
+{% block content %}
+    <div class="container"> <!-- container -->
+
+      <!-- Today Header -->
+      <div class="col-xs-12 col-lg-12"> <!-- responsive block -->
+	<div class="dash-unit today-header">Today</div>
+      </div><!-- /responsive block -->
+      <!-- /Today Header -->
+
+      {% for show in today %}
+
+      <div class="col-xs-3 col-lg-3"> <!-- responsive block -->
+        <div class="dash-unit"> <!-- dash unit -->
+
+	  <div class="thumbnail" height="50%"><!-- thumbnail -->
+	    <img src="{{ show['bannerpath'] }}" class="img-thumbnail" width="100%" style="max-height:200px">
+	  </div><!-- /thumbnail -->
+	  <div>
+            <span class="show-name">{{ show['show']['title'] }}</span>
+            <span class="show-title">{{ show['episode']['season'] }}x{{ show['episode']['number'] }} {{ show['episode']['title'] }}</span>
+	          <span class="show-time">{{ show['first_aired'] }}</span>
+          </div>
+
+        </div> <!-- /dash unit -->
+      </div><!-- /responsive block -->
+
+      {% else %}
+      <div class="col-xs-12 col-lg-12"><div class="empty-list">None</div></div>
+      {% endfor %}
+
+      <!-- Tomorrow Header -->
+      <div class="col-xs-12 col-lg-12"> <!-- responsive block -->
+  <div class="dash-unit today-header">Tomorrow</div>
+      </div><!-- /responsive block -->
+      <!-- /Tomorrow Header -->
+
+      {% for show in tomorrow %}
+
+      <div class="col-xs-3 col-lg-3"> <!-- responsive block -->
+        <div class="dash-unit"> <!-- dash unit -->
+
+    <div class="thumbnail" height="50%"><!-- thumbnail -->
+      <img src="{{ show['bannerpath'] }}" class="img-thumbnail" width="100%" style="max-height:200px">
+    </div><!-- /thumbnail -->
+    <div>
+            <span class="show-name">{{ show['show']['title'] }}</span>
+            <span class="show-title">{{ show['episode']['season'] }}x{{ show['episode']['number'] }} {{ show['episode']['title'] }}</span>
+            <span class="show-time">{{ show['first_aired'] }}</span>
+          </div>
+
+        </div> <!-- /dash unit -->
+      </div><!-- /responsive block -->
+
+      {% else %}
+      <div class="col-xs-12 col-lg-12"><div class="empty-list">None</div></div>
+      {% endfor %}
+
+      <!-- Week Header -->
+      <div class="col-xs-12 col-lg-12"> <!-- responsive block -->
+  <div class="dash-unit today-header">Week</div>
+      </div><!-- /responsive block -->
+      <!-- /Week Header -->
+
+      {% for show in week %}
+
+      <div class="col-xs-3 col-lg-3"> <!-- responsive block -->
+        <div class="dash-unit"> <!-- dash unit -->
+
+    <div class="thumbnail" height="50%"><!-- thumbnail -->
+      <img src="{{ show['bannerpath'] }}" class="img-thumbnail" width="100%" style="max-height:200px">
+    </div><!-- /thumbnail -->
+    <div>
+            <span class="show-name">{{ show['show']['title'] }}</span>
+            <span class="show-title">{{ show['episode']['season'] }}x{{ show['episode']['number'] }} {{ show['episode']['title'] }}</span>
+            <span class="show-time">{{ show['first_aired'] }}</span>
+          </div>
+
+        </div> <!-- /dash unit -->
+      </div><!-- /responsive block -->
+
+      {% else %}
+      <div class="col-xs-12 col-lg-12"><div class="empty-list">None</div></div>
+      {% endfor %}
+
+
+
+
+    </div><!-- /container -->
+{% endblock %}
