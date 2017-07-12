@@ -17,5 +17,8 @@ def index():
 
 @app.route('/weather')
 def display_weather():
-    currently, hourly, daily = weather.get_weather()
-    return render_template('weather.html')
+    currently, daily, hourly = weather.get_weather()
+    return render_template('weather.html',
+                           currently=currently,
+                           hourly=hourly,
+                           daily=daily)

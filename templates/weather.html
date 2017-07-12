@@ -11,175 +11,73 @@
 	            <img src="../static/img/weather/day-light-rain.png" width="100%" alt="Rainy">
             </div><!-- /thumbnail -->
             <div>
-              <h2>83&deg;F</h2>
-	      <h3>22&deg;F / 100&deg;F</h3>
+              <h2>{{ currently['temperature'] }}&deg;F</h2>
+	      <h3>{{ currently['temperatureMin'] }}&deg;F / {{ currently['temperatureMax'] }}&deg;F</h3>
 	    </div>
           </div>
 	  <div style="display: inline-block; text-align:left;" height="100%">
-	    <h4>Feels Like: 50&deg;F</h4>
-	    <h4>Humidty: 50%</h4>
-	    <h4>Wind: 50MPH NW</h4>
-	    <h4>Nearest Storm: 50mi</h4>
-	    <h4>Snowfall: 2 inches</h4> <!-- If no snowfall is expected, this property will not be defined.-->
-            <h4>Precip Intensity: 0 inches</h4> <!-- only if precip probably > 0-->
-            <h4>Precip Probability: 0%</h4>
-            <h4>Precip type: Rain</h4> <!-- only if precip probably > 0-->
+	    <h4>Feels Like: {{ currently['apparentTemperature'] }}&deg;F</h4>
+	    <h4>Humidty: {{ currently['humidty'] }}%</h4>
+	    <h4>Wind: {{ currently['windSpeed'] }}MPH NW</h4>
+	    <h4>Nearest Storm: {{ currently['nearestStormDistance'] }}mi</h4>
+
+        {% if currently['precipProbability'] is greaterthan 0 %}
+            <h4>Precip Probability: {{ currently['precipProbability'] }}%</h4>
+            <h4>Precip type: {{ currently['precipType'] }}</h4> 
+            <h4>Precip Intensity: {{ currently['precipIntensity'] }} inches</h4> 
+        {% endif %}
+	{% if daily[0]['precipAccumulation'] is defined %}
+	    <h4>Snowfall: daily[0]['precipAccumulation'] inches</h4> <!-- If no snowfall is expected, this property will not be defined.-->
+        {% endif %}
 	  </div>
           <hr>
 	  <div>
 	    <div style="display: inline-block;">
               <div><img src="../static/img/sunrise.png" width=100 height=100></div>
-              <div>5:30AM</div>
+              <div>{{ daily[0]['sunriseTime'] }}AM</div>
             </div>
 	    <div style="display: inline-block;">
               <div><img src="../static/img/moon/24.png" width=100 height=100></div>
-              <div>Waning Crescent</div>
+              <div>{{ daily[0]['moonPhase'] }}</div>
             </div>
 	    <div style="display: inline-block;">
               <div><img src="../static/img/sunset.png" width=100 height=100></div>
-              <div>5:30 PM</div>
+              <div>{{ daily[0]['sunsetTime'] }} PM</div>
             </div>
           </div>
-
-<!--
-https://darksky.net/dev/docs/response
-
-To right:
-apparentTemperature -
-humidity -
-nearestStormDistance -
-precipAccumulation - Only if snowfall
-precipIntensity -  The intensity (in inches of liquid water per hour) of precipitation occurring at the given time.
-precipIntensityMax -   The maximum value of precipIntensity during a given day.
-precipProbability The probability of precipitation occurring, between 0 and 1, inclusive.
-precipType         only if precipIntensity is not 0
-windBearing
-windSpeed
-pressure
-
-
-under:
-moonPhase
-sunriseTime
-sunsetTime
-
-
-
-Can be images:
-Moon phase
-Sunset
-Sunrise
-
--->
 
         </div> <!-- /dash unit -->
       </div><!-- /responsive block -->
 
+
+    {% for hour in range(2,13,2) %}
+<!-- six of these -->
       <div class="col-sm-2 col-lg-2"><!-- responsive block -->
         <div class="dash-unit"><!-- dash unit -->
 
           <div class="thumbnail weather-thumbnail" style="display: inline-block;">3:00 PM
-            <img src="../static/img/rain.png" alt="Rainy" height="50">
-            <h4>100&deg;F</h4>
+            <img src="../static/img/rain.png" alt="" height="50">
+            <h4>{{ hourly[hour]['temperature'] }}&deg;F</h4>
           </div>
 
         </div><!-- /responsive block -->
       </div><!-- /dash unit -->
-
-      <div class="col-sm-2 col-lg-2"><!-- responsive block -->
-        <div class="dash-unit"><!-- dash unit -->
-
-          <div class="thumbnail weather-thumbnail" style="display: inline-block;">3:00 PM
-            <img src="../static/img/rain.png" alt="Rainy" height="50">
-            <h4>100&deg;F</h4>
-          </div>
-
-        </div><!-- /responsive block -->
-      </div><!-- /dash unit -->
-
-      <div class="col-sm-2 col-lg-2"><!-- responsive block -->
-        <div class="dash-unit"><!-- dash unit -->
-
-          <div class="thumbnail weather-thumbnail" style="display: inline-block;">3:00 PM
-            <img src="../static/img/rain.png" alt="Rainy" height="50">
-            <h4>100&deg;F</h4>
-          </div>
-
-        </div><!-- /responsive block -->
-      </div><!-- /dash unit -->
-
-      <div class="col-sm-2 col-lg-2"><!-- responsive block -->
-        <div class="dash-unit"><!-- dash unit -->
-
-          <div class="thumbnail weather-thumbnail" style="display: inline-block;">3:00 PM
-            <img src="../static/img/rain.png" alt="Rainy" height="50">
-            <h4>100&deg;F</h4>
-          </div>
-
-        </div><!-- /responsive block -->
-      </div><!-- /dash unit -->
-
-      <div class="col-sm-2 col-lg-2"><!-- responsive block -->
-        <div class="dash-unit"><!-- dash unit -->
-
-          <div class="thumbnail weather-thumbnail" style="display: inline-block;">3:00 PM
-            <img src="../static/img/rain.png" alt="Rainy" height="50">
-            <h4>100&deg;F</h4>
-          </div>
-
-        </div><!-- /responsive block -->
-      </div><!-- /dash unit -->
-
-      <div class="col-sm-2 col-lg-2"><!-- responsive block -->
-        <div class="dash-unit"><!-- dash unit -->
-
-          <div class="thumbnail weather-thumbnail" style="display: inline-block;">3:00 PM
-            <img src="../static/img/rain.png" alt="Rainy" height="50">
-            <h4>100&deg;F</h4>
-          </div>
-
-        </div><!-- /responsive block -->
-      </div><!-- /dash unit -->
+    {% endfor %}
+<!-- /six of these -->
 
 
 
       <div class="col-sm-12 col-lg-12"><!-- responsive block -->
         <div class="dash-unit"><!-- dash unit -->
 
+        {% for day in range(1,8) %}
+
           <div class="thumbnail weather-thumbnail" style="display: inline-block;">Sunday
             <img src="../static/img/rain.png" alt="Rainy" class="img-circle" height="50">
-            <h4>50&deg;F / 100&deg;F</h4>
+            <h4>{{ daily[day]['temperatureMin'] }}&deg;F / {{ daily[day]['temperatureMax'] }}&deg;F</h4>
           </div>
 
-          <div class="thumbnail weather-thumbnail" style="display: inline-block;">Monday
-            <img src="../static/img/rain.png" alt="Rainy" class="img-circle" height="50">
-            <h4>50&deg;F / 100&deg;F</h4>
-          </div>
-
-          <div class="thumbnail weather-thumbnail" style="display: inline-block;">Tuesday
-            <img src="../static/img/rain.png" alt="Rainy" class="img-circle" height="50">
-            <h4>50&deg;F / 100&deg;F</h4>
-          </div>
-
-          <div class="thumbnail weather-thumbnail" style="display: inline-block;">Wednesday
-            <img src="../static/img/rain.png" alt="Rainy" class="img-circle" height="50">
-            <h4>50&deg;F / 100&deg;F</h4>
-          </div>
-
-          <div class="thumbnail weather-thumbnail" style="display: inline-block;">Thursday
-            <img src="../static/img/rain.png" alt="Rainy" class="img-circle" height="50">
-            <h4>50&deg;F / 100&deg;F</h4>
-          </div>
-
-          <div class="thumbnail weather-thumbnail" style="display: inline-block;">Friday
-            <img src="../static/img/rain.png" alt="Rainy" class="img-circle" height="50">
-            <h4>50&deg;F / 100&deg;F</h4>
-          </div>
-
-          <div class="thumbnail weather-thumbnail" style="display: inline-block;">Saturday
-            <img src="../static/img/rain.png" alt="Rainy" class="img-circle" height="50">
-            <h4>50&deg;F / 100&deg;F</h4>
-          </div>
+        {% endfor %}
 
         </div><!-- /responsive block -->
       </div><!-- /dash unit -->
@@ -189,132 +87,76 @@ Sunrise
     </div><!-- /container -->
 {% endblock %}
 <!--
-
 apparentTemperature optional, not on daily
-The apparent (or �feels like�) temperature in degrees Fahrenheit.
-
+The apparent (or ?feels like?) temperature in degrees Fahrenheit.
 apparentTemperatureMax optional, only on daily
 The maximum value of apparentTemperature during a given day.
-
 apparentTemperatureMaxTime optional, only on daily
 The UNIX time of when apparentTemperatureMax occurs during a given day.
-
 apparentTemperatureMin optional, only on daily
 The minimum value of apparentTemperature during a given day.
-
 apparentTemperatureMinTime optional, only on daily
 The UNIX time of when apparentTemperatureMin occurs during a given day.
-
 cloudCover optional
 The percentage of sky occluded by clouds, between 0 and 1, inclusive.
-
 dewPoint optional
 The dew point in degrees Fahrenheit.
-
 humidity optional
 The relative humidity, between 0 and 1, inclusive.
-
 icon optional
 A machine-readable text summary of this data point, suitable for selecting an icon for display. If defined, this property will have one of the following values: clear-day, clear-night, rain, snow, sleet, wind, fog, cloudy, partly-cloudy-day, or partly-cloudy-night. (Developers should ensure that a sensible default is defined, as additional values, such as hail, thunderstorm, or tornado, may be defined in the future.)
-
 moonPhase optional, only on daily
 The fractional part of the lunation number during the given day: a value of 0 corresponds to a new moon, 0.25 to a first quarter moon, 0.5 to a full moon, and 0.75 to a last quarter moon. (The ranges in between these represent waxing crescent, waxing gibbous, waning gibbous, and waning crescent moons, respectively.)
-
 nearestStormBearing optional, only on currently
-The approximate direction of the nearest storm in degrees, with true north at 0� and progressing clockwise. (If nearestStormDistance is zero, then this value will not be defined.)
-
+The approximate direction of the nearest storm in degrees, with true north at 0? and progressing clockwise. (If nearestStormDistance is zero, then this value will not be defined.)
 nearestStormDistance optional, only on currently
-The approximate distance to the nearest storm in miles. (A storm distance of 0 doesn�t necessarily refer to a storm at the requested location, but rather a storm in the vicinity of that location.)
-
+The approximate distance to the nearest storm in miles. (A storm distance of 0 doesn?t necessarily refer to a storm at the requested location, but rather a storm in the vicinity of that location.)
 ozone optional
 The columnar density of total atmospheric ozone at the given time in Dobson units.
-
 precipAccumulation optional, only on hourly and daily
 The amount of snowfall accumulation expected to occur, in inches. (If no snowfall is expected, this property will not be defined.)
 precipIntensity optional
 The intensity (in inches of liquid water per hour) of precipitation occurring at the given time. This value is conditional on probability (that is, assuming any precipitation occurs at all) for minutely data points, and unconditional otherwise.
-
 precipIntensityMax optional, only on daily
 The maximum value of precipIntensity during a given day.
-
 precipIntensityMaxTime optional, only on daily
 The UNIX time of when precipIntensityMax occurs during a given day.
-
-
 precipProbability optional
 The probability of precipitation occurring, between 0 and 1, inclusive.
-
-
 precipType optional
-The type of precipitation occurring at the given time. If defined, this property will have one of the following values: "rain", "snow", or "sleet" (which refers to each of freezing rain, ice pellets, and �wintery mix�). (If precipIntensity is zero, then this property will not be defined.)
-
-
+The type of precipitation occurring at the given time. If defined, this property will have one of the following values: "rain", "snow", or "sleet" (which refers to each of freezing rain, ice pellets, and ?wintery mix?). (If precipIntensity is zero, then this property will not be defined.)
 pressure optional
 The sea-level air pressure in millibars.
-
-
 summary optional
-A human-readable text summary of this data point. (This property has millions of possible values, so don�t use it for automated purposes: use the icon property, instead!)
-
-
+A human-readable text summary of this data point. (This property has millions of possible values, so don?t use it for automated purposes: use the icon property, instead!)
 sunriseTime optional, only on daily
 The UNIX time of when the sun will rise during a given day.
-
-
 sunsetTime optional, only on daily
 The UNIX time of when the sun will set during a given day.
-
-
 temperature optional, not on minutely
 The air temperature in degrees Fahrenheit.
-
-
 temperatureMax optional, only on daily
 The maximum value of temperature during a given day.
-
-
 temperatureMaxTime optional, only on daily
 The UNIX time of when temperatureMax occurs during a given day.
-
-
 temperatureMin optional, only on daily
 The minimum value of temperature during a given day.
-
-
 temperatureMinTime optional, only on daily
 The UNIX time of when temperatureMin occurs during a given day.
-
-
 time required
 The UNIX time at which this data point begins. minutely data point are always aligned to the top of the minute, hourly data point objects to the top of the hour, and daily data point objects to midnight of the day, all according to the local time zone.
-
-
 uvIndex optional
 The UV index.
-
-
 uvIndexTime optional, only on daily
 The UNIX time of when the maximum uvIndex occurs during a given day.
-
-
 visibility optional
 The average visibility in miles, capped at 10 miles.
-
-
 windBearing optional
-The direction that the wind is coming from in degrees, with true north at 0� and progressing clockwise. (If windSpeed is zero, then this value will not be defined.)
-
-
+The direction that the wind is coming from in degrees, with true north at 0? and progressing clockwise. (If windSpeed is zero, then this value will not be defined.)
 windGust optional
 The wind gust speed in miles per hour.
-
-
 windGustTime optional, only on daily
 The UNIX time of when the maximum windGust occurs during a given day.
-
-
 windSpeed optional
 The wind speed in miles per hour.
-
-
 -->
