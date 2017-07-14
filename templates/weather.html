@@ -8,23 +8,24 @@
 
 	  <div class="main-weather" align="center">
             <div class="thumbnail weather-thumbnail main-weather-thumbnail">
-	            <img src="../static/img/weather/day-light-rain.png" width="100%" alt="Rainy">
+	            <img src="../static/img/weather/{{ currently['icon'] }}.png" width="100%" alt="">
             </div><!-- /thumbnail -->
             <div>
-              <h2>{{ currently['temperature'] }}&deg;F</h2>
-	      <h3>{{ currently['temperatureMin'] }}&deg;F / {{ currently['temperatureMax'] }}&deg;F</h3>
+              <h2>{{ '{0:0.0f}'.format(currently['temperature']) }}&deg;F</h2>
+	      <h3>{{ '{0:0.0f}'.format(currently['temperatureMin']) }}&deg;F / {{ '{0:0.0f}'.format(currently['temperatureMax']) }}&deg;F</h3>
 	    </div>
           </div>
 	  <div style="display: inline-block; text-align:left;" height="100%">
-	    <h4>Feels Like: {{ currently['apparentTemperature'] }}&deg;F</h4>
-	    <h4>Humidty: {{ currently['humidty'] }}%</h4>
-	    <h4>Wind: {{ currently['windSpeed'] }}MPH NW</h4>
+      <h4>Icon: {{ currently['icon'] }}
+	    <h4>Feels Like: {{ '{0:0.0f}'.format(currently['apparentTemperature']) }}&deg;F</h4>
+	    <h4>Humidty: {{ currently['humidity'] }}%</h4>
+	    <h4>Wind: {{ currently['windSpeed'] }}MPH {{ currently['windBearing'] }}</h4>
 	    <h4>Nearest Storm: {{ currently['nearestStormDistance'] }}mi</h4>
 
         {% if currently['precipProbability'] is greaterthan 0 %}
             <h4>Precip Probability: {{ currently['precipProbability'] }}%</h4>
-            <h4>Precip type: {{ currently['precipType'] }}</h4> 
-            <h4>Precip Intensity: {{ currently['precipIntensity'] }} inches</h4> 
+            <h4>Precip type: {{ currently['precipType'] }}</h4>
+            <h4>Precip Intensity: {{ currently['precipIntensity'] }} inches</h4>
         {% endif %}
 	{% if daily[0]['precipAccumulation'] is defined %}
 	    <h4>Snowfall: daily[0]['precipAccumulation'] inches</h4> <!-- If no snowfall is expected, this property will not be defined.-->
@@ -34,15 +35,15 @@
 	  <div>
 	    <div style="display: inline-block;">
               <div><img src="../static/img/sunrise.png" width=100 height=100></div>
-              <div>{{ daily[0]['sunriseTime'] }}AM</div>
+              <div>{{ daily[0]['sunriseTime'] | format_date_US  }}</div>
             </div>
 	    <div style="display: inline-block;">
-              <div><img src="../static/img/moon/24.png" width=100 height=100></div>
+              <div><img src="../static/img/moon/{{ daily[0]['moonPhase'] }}.png" width=100 height=100></div>
               <div>{{ daily[0]['moonPhase'] }}</div>
             </div>
 	    <div style="display: inline-block;">
               <div><img src="../static/img/sunset.png" width=100 height=100></div>
-              <div>{{ daily[0]['sunsetTime'] }} PM</div>
+              <div>{{ daily[0]['sunsetTime'] | format_date_US  }}</div>
             </div>
           </div>
 
@@ -52,12 +53,12 @@
 
     {% for hour in range(2,13,2) %}
 <!-- six of these -->
-      <div class="col-sm-2 col-lg-2"><!-- responsive block -->
+      <div class="col-xs-2 col-lg-2"><!-- responsive block -->
         <div class="dash-unit"><!-- dash unit -->
 
-          <div class="thumbnail weather-thumbnail" style="display: inline-block;">3:00 PM
-            <img src="../static/img/rain.png" alt="" height="50">
-            <h4>{{ hourly[hour]['temperature'] }}&deg;F</h4>
+          <div class="thumbnail weather-thumbnail" style="display: inline-block;">{{ hourly[hour]['time'] | format_date_US }}
+            <img src="../static/img/weather/{{ hourly[hour]['icon'] }}.png" alt="{{ hourly[hour]['icon'] }}" height="50">
+            <h2>{{ '{0:0.0f}'.format(hourly[hour]['temperature']) }}&deg;F</h2>
           </div>
 
         </div><!-- /responsive block -->
@@ -67,14 +68,14 @@
 
 
 
-      <div class="col-sm-12 col-lg-12"><!-- responsive block -->
+      <div class="col-xs-12 col-lg-12"><!-- responsive block -->
         <div class="dash-unit"><!-- dash unit -->
 
         {% for day in range(1,8) %}
 
-          <div class="thumbnail weather-thumbnail" style="display: inline-block;">Sunday
-            <img src="../static/img/rain.png" alt="Rainy" class="img-circle" height="50">
-            <h4>{{ daily[day]['temperatureMin'] }}&deg;F / {{ daily[day]['temperatureMax'] }}&deg;F</h4>
+          <div class="thumbnail weather-thumbnail" style="display: inline-block;">{{ daily[day]['time'] | format_day }}
+            <img src="../static/img/weather/{{ daily[day]['icon'] }}.png" alt="{{ daily[day]['icon'] }}" class="img-circle" height="50">
+            <h4>{{ '{0:0.0f}'.format(daily[day]['temperatureMin']) }}&deg;F / {{ '{0:0.0f}'.format(daily[day]['temperatureMax']) }}&deg;F</h4>
           </div>
 
         {% endfor %}
