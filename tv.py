@@ -3,10 +3,10 @@ import json
 import pendulum
 import tvdb
 import sqlite3
-
+import os
 tvdb = tvdb.TVDB()
 
-with open('config.json', 'r') as f:
+with open(os.path.dirname(__file__) + '/config.json', 'r') as f:
     config = json.load(f)
 
 
